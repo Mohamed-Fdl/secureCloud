@@ -1,14 +1,16 @@
-setup env for work 
+//setup env for work 
 
-install express and set up basic routing with differentes files for each route
+//install express and set up basic routing with differentes files for each route
 
-set up .env file with dotenv to manage port & node env etc..
+//set up .env file with dotenv to manage port & node env etc..
 
-connect to db
+//connect to db
 
-add models set up first real route & implement feature
+//add models set up first real route & implement feature
 
 increment so that project api side finish
+
+mail to validate account
 
 test api 
 
