@@ -10,7 +10,3 @@ module.exports = function() {
             throw console.log(err)
         });
 }
-
-// fdlSecureCloud
-
-// mbtd6JLjg7JtyFL
