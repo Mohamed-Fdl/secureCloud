@@ -4,7 +4,7 @@ const app = express()
 
 app.use(express.json())
 
-const dbConnection = require('./dbConnect')
+const dbConnection = require('./utils/dbConnect')
 
 dbConnection()
 
