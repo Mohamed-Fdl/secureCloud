@@ -9,10 +9,12 @@ const dbConnection = require('./utils/dbConnect')
 dbConnection()
 
 const users = require('./routes/users')
+const ressources = require('./routes/ressources')
 
 
 
 app.use('/api/user', users)
+app.use('/api/getRessource', ressources)
 
 
 

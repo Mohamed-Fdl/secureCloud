@@ -10,6 +10,8 @@ const User = require('../models/User')
 
 const { sign } = require('../utils/helpers')
 
+const { getRessourceLink } = require('../utils/helpers')
+
 
 router.post('/register', userRequestValidator, async(req, res) => {
     try {
@@ -56,7 +58,7 @@ router.post('/login', userRequestValidator, async(req, res) => {
                 return res.status(200).json({
                     error: false,
                     message,
-                    data: { user: userExist, token }
+                    data: { user: userExist, ressourceLink: getRessourceLink(token) }
                 })
             }
 
