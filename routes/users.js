@@ -10,8 +10,11 @@ const User = require('../models/User')
 
 const { sign } = require('../utils/helpers')
 
-const { getRessourceLink } = require('../utils/helpers')
+const { getRessourceLink, getEmailVerificationLink } = require('../utils/helpers')
 
+const Mailer = require('../mail/index')
+
+const validateEmail = require('../mail/validateEmail')
 
 router.post('/register', userRequestValidator, async(req, res) => {
     try {
@@ -26,6 +29,8 @@ router.post('/register', userRequestValidator, async(req, res) => {
         }
 
         const user = await User.create(req.body)
+
+        Mailer(validateEmail(getEmailVerificationLink(user.emailValidationToken)), user.email)
 
         return res.json({
             error: false,
@@ -76,6 +81,26 @@ router.post('/login', userRequestValidator, async(req, res) => {
             })
         }
 
+
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: 'An error occured.Please retry',
+            data: error
+        })
+    }
+})
+
+router.post('/verifyEmail/:token', async(req, res) => {
+    try {
+
+        let userToValidate = await User.findOneAndUpdate({ email: req.body.email, emailValidationToken: req.params.token }, { emailVerified: true }, { new: true })
+
+        return res.status(200).json({
+            error: false,
+            message: 'Email verified',
+            data: { user: userToValidate }
+        })
 
     } catch (error) {
         return res.status(500).json({

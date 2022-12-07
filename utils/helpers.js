@@ -7,3 +7,7 @@ module.exports.sign = function(data) {
 module.exports.getRessourceLink = function(token) {
     return process.env.APP_URL + 'api/getRessource/' + token;
 }
+
+module.exports.getEmailVerificationLink = function(verificationToken) {
+    return process.env.APP_URL + 'api/user/verifyEmail/' + verificationToken;
+}
