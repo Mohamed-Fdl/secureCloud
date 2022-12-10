@@ -2,15 +2,15 @@ const express = require('express')
 
 const bcrypt = require('bcrypt')
 
+const { omit } = require('underscore')
+
 const router = express.Router()
 
 const userRequestValidator = require('../middlewares/userRequestValidator')
 
 const User = require('../models/User')
 
-const { sign } = require('../utils/helpers')
-
-const { getRessourceLink, getEmailVerificationLink } = require('../utils/helpers')
+const { getRessourceLink, getEmailVerificationLink, sanitizeMongoDbReturn, sign } = require('../utils/helpers')
 
 const Mailer = require('../mail/index')
 
@@ -28,16 +28,19 @@ router.post('/register', userRequestValidator, async(req, res) => {
             })
         }
 
-        const user = await User.create(req.body)
+        let user = await User.create(req.body)
 
-        Mailer(validateEmail(getEmailVerificationLink(user.emailValidationToken)), user.email)
+        user = sanitizeMongoDbReturn(user)
+
+        //Mailer(validateEmail(getEmailVerificationLink(user.emailValidationToken)), user.email)
 
         return res.json({
             error: false,
             message: 'User created successfully',
-            data: user
+            data: user.email
         })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             error: true,
             message: 'An error occured.Please retry',

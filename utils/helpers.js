@@ -11,3 +11,7 @@ module.exports.getRessourceLink = function(token) {
 module.exports.getEmailVerificationLink = function(verificationToken) {
     return process.env.APP_URL + 'api/user/verifyEmail/' + verificationToken;
 }
+
+module.exports.sanitizeMongoDbReturn = function(mongoReturn) {
+    return JSON.parse(JSON.stringify(mongoReturn))
+}
