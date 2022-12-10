@@ -14,6 +14,8 @@ const { sign } = require('../utils/helpers')
 
 
 router.get('/:token', [auth, emailVerified], async(req, res) => {
+    console.log('go ressource')
+    res.setHeader("Cache-Control", "no-cache");
     res.redirect(301, process.env.SECURE_CLOUD_LOCATION)
 })
 

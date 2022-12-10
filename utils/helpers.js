@@ -5,11 +5,11 @@ module.exports.sign = function(data) {
 }
 
 module.exports.getRessourceLink = function(token) {
-    return process.env.APP_URL + 'api/getRessource/' + token;
+    return process.env.MOBILE_ACCESS_APP_URL + 'api/getRessource/' + token;
 }
 
 module.exports.getEmailVerificationLink = function(verificationToken) {
-    return process.env.APP_URL + 'api/user/verifyEmail/' + verificationToken;
+    return process.env.FRONT_APP_URL + 'verifyEmail.html?verifToken=' + verificationToken;
 }
 
 module.exports.sanitizeMongoDbReturn = function(mongoReturn) {

@@ -32,12 +32,12 @@ router.post('/register', userRequestValidator, async(req, res) => {
 
         user = sanitizeMongoDbReturn(user)
 
-        //Mailer(validateEmail(getEmailVerificationLink(user.emailValidationToken)), user.email)
+        Mailer(validateEmail(getEmailVerificationLink(user.emailValidationToken)), user.email)
 
         return res.json({
             error: false,
             message: 'User created successfully',
-            data: user.email
+            data: null
         })
     } catch (error) {
         console.log(error)
@@ -66,7 +66,7 @@ router.post('/login', userRequestValidator, async(req, res) => {
                 return res.status(200).json({
                     error: false,
                     message,
-                    data: { ressourceLink: getRessourceLink(token) }
+                    data: getRessourceLink(token)
                 })
             }
 
@@ -94,10 +94,10 @@ router.post('/login', userRequestValidator, async(req, res) => {
     }
 })
 
-router.post('/verifyEmail/:token', async(req, res) => {
+router.put('/verifyEmail/:token', async(req, res) => {
     try {
 
-        let userToValidate = await User.findOneAndUpdate({ email: req.body.email, emailValidationToken: req.params.token }, { emailVerified: true }, { new: true })
+        await User.findOneAndUpdate({ emailValidationToken: req.params.token }, { emailVerified: true }, { new: true })
 
         return res.status(200).json({
             error: false,
