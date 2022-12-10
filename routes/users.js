@@ -66,7 +66,7 @@ router.post('/login', userRequestValidator, async(req, res) => {
                 return res.status(200).json({
                     error: false,
                     message,
-                    data: { user: userExist, ressourceLink: getRessourceLink(token) }
+                    data: { ressourceLink: getRessourceLink(token) }
                 })
             }
 
@@ -102,7 +102,7 @@ router.post('/verifyEmail/:token', async(req, res) => {
         return res.status(200).json({
             error: false,
             message: 'Email verified',
-            data: { user: userToValidate }
+            data: null
         })
 
     } catch (error) {
